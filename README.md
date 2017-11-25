@@ -7,6 +7,7 @@ App em React Native para listar issues de um repositório Git
 npm install 
 
 ## Usage
+
 ```js
 import React, { Component } from 'react';
 import {
@@ -23,4 +24,4 @@ export default class App extends Component {
     );
   }
 }
-```
+
