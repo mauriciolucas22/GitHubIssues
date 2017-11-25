@@ -7,9 +7,9 @@ App em React Native para listar issues de um repositório Git
 npm install 
 
 ## Usage
+import React, { Component } from 'react';
 
 ```js
-import React, { Component } from 'react';
 import {
   View,
 } from 'react-native';
