@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View,
-} from 'react-native';
+import { View } from 'react-native';
 
-export default class Issues extends Component {
+export default class App extends Component {
   render(){
     return(
       <View />
     );
   }
-}
+};

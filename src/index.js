@@ -14,28 +14,27 @@ export default class App extends Component {
   }
 
   componentWillMount(){
-    //AsyncStorage.clear();
-    this.checkUser().then((response) => {
-      this.setState({ userExists: response, userChecked: true });
+    this.checkUser().then((res) => {
+      this.setState({ userExists: res, userChecked: true });
     });
   };
-
-  /*checkAndSaveUser = async () => {
-    const response = await api.get(`/users/${this.state.username}`);
-
-
-
-    if( !response.ok ) throw Error();
-
-    await AsyncStorage.setItem('@GitHubIssues:username', this.state.username);
-  };*/
 
   checkUser = async () => {
     const user = await AsyncStorage.getItem('@GitHubIssues:username');
 
     return user !== null;
+  }
+
+  /*checkAndSaveUser = async () => {
+    const response = await api.get(`/users/${this.state.username}`);
+
+    if( !response.ok ) throw Error();
+
+    await AsyncStorage.setItem('@GitHubIssues:username', this.state.username);
   };
 
+
+  };*/
 
   render(){
     const { userExists, userChecked } = this.state;
@@ -44,10 +43,6 @@ export default class App extends Component {
 
     const Layout = createRootNavigator(userExists);
 
-    return(
-      <View >
-        <Text>JESUSU</Text>
-      </View>
-    );
+    return <Layout />;
   }
 };

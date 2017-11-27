@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import {
-  View,
-} from 'react-native';
-
-import Repository from './components/Repository';
+import { View, Text } from 'react-native';
 
 export default class Repositories extends Component {
   render(){
     return(
-      <Repository />
+      <View>
+        <Text>Repos</Text>
+      </View>
     );
   }
 };
