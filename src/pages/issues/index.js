@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {
-  View,
-} from 'react-native';
+import { View, Text, } from 'react-native';
 
 export default class Issues extends Component {
-  render(){
-    return(
-      <View />
-    );
-  }
+    render(){
+        return(
+            <View>
+                <Text>Issues</Text>
+            </View>
+        );
+    }
 }
