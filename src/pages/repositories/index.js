@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage, TouchableOpacity, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import api from '../../services/api';
+import Repository from './components/Repository';
 
 export default class Repositories extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
+  }
+
+  state = {
+    repositories: [],
+    username: 'facebook',
+  }
+
   componentWillMount() {
     this.checkUser().then((response) => {
-      if (response) console.tron.log('OKKKKKK');
-      else console.tron.log('VAZIO');
+      if (!response) {
+        this.checkAndSaveUser();
+      }
     });
   }
 
   checkUser = async () => {
-    const user = AsyncStorage.getItem('@GitHubIssues:username');
+    const user = await AsyncStorage.getItem('@GitHubIssues:username');
     return user !== null;
   }
 
@@ -20,13 +34,18 @@ export default class Repositories extends Component {
 
     if (!response.ok) throw Error();// se user não existe Error
 
-    await AsyncStorage.setItem('@SecondGiHubApp:username', this.state.username);
+    await AsyncStorage.setItem('@GiHubAppIssues:username', this.state.username);
   };
+
+  repository = {
+    full_name: 'TESTE',
+  }
 
   render() {
     return (
       <View>
         <Text>Repos</Text>
+        <Repository navigation={this.props.navigation} repository={this.repository} />
       </View>
     );
   }
