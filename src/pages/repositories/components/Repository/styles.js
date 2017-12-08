@@ -3,7 +3,9 @@ import { colors } from '../../../../styles';
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 20,
+    marginRight: 20,
   },
 
   buttonContainer: {

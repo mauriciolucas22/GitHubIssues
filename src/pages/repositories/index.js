@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, ActivityIndicator } from 'react-native';
+import { View, Text, AsyncStorage, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Repository from './components/Repository';
@@ -18,23 +18,29 @@ export default class Repositories extends Component {
   state = {
     repositories: [],
     loading: false,
+    refreshing: false,
   }
 
   componentWillMount() {
-    this.loadRepositories();
+    this.setState({ loading: true });
+    this.loadRepositories().then(() => {
+      this.setState({ loading: false });
+    });
   }
 
   loadRepositories = async () => {
-    this.setState({ loading: true });
+    this.setState({ refreshing: true });
     const username = await AsyncStorage.getItem('@GitHubAppIssues:username');
     const response = await api.get(`/users/${username}/repos`);
-    this.setState({ repositories: response.data, loading: false });
+    this.setState({ repositories: response.data, refreshing: false });
   };
 
   renderRepositories = () => (
-    this.state.repositories.map(repo => (
-      <Repository key={repo.id} navigation={this.props.navigation} repository={repo} />
-    ))
+    <FlatList 
+      data={this.state.repositories} // conteudo que sera renderizado
+      keyExtractor={repository => repository.id}// key, um repositorio por vez
+      renderItem={({ item }) => <Repository navigation={this.props.navigation} repository={item} />}// como será renderizado cada item, { item } contem cada valor de state.repositories
+    />
   );
 
   renderList = () => (
@@ -47,7 +53,7 @@ export default class Repositories extends Component {
     return (
       <View style={styles.container}>
         { this.state.loading
-          ? <ActivityIndicator size="small" color="#999" />
+          ? <ActivityIndicator size="small" color="#999" style={styles.loading} />
           : this.renderList()
         }
       </View>
