@@ -17,33 +17,12 @@ export default class Repositories extends Component {
 
   state = {
     repositories: [],
-    username: 'facebook',
     loading: false,
   }
 
   componentWillMount() {
-    // AsyncStorage.clear();
-    this.checkUser().then((response) => {
-      if (!response) {
-        this.checkAndSaveUser();
-      }
-    });
-
     this.loadRepositories();
   }
-
-  checkUser = async () => {
-    const user = await AsyncStorage.getItem('@GitHubAppIssues:username');
-    return user !== null;
-  }
-
-  checkAndSaveUser = async () => {
-    const response = await api.get(`/users/${this.state.username}`);// await = api.get(...).then(response => {...})
-
-    if (!response.ok) throw Error();// se user não existe Error
-
-    await AsyncStorage.setItem('@GitHubAppIssues:username', this.state.username);
-  };
 
   loadRepositories = async () => {
     this.setState({ loading: true });
@@ -71,7 +50,6 @@ export default class Repositories extends Component {
           ? <ActivityIndicator size="small" color="#999" />
           : this.renderList()
         }
-        
       </View>
     );
   }
