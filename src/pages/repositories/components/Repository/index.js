@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+
+import styles from './styles';
 
 export default class Repository extends Component {
   static propTypes = {
@@ -27,12 +29,14 @@ export default class Repository extends Component {
   render() {
     const { repository } = this.props;
     return (
-      <View>
-        <TouchableOpacity onPress={this.navigateToIssues}>
-          { this.state.loading
-          ? <ActivityIndicator size="small" color="#FFF" />
-          : <Text>{repository.full_name}</Text>
-          }
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.navigateToIssues}>
+          <Text style={styles.avatar}>Avatar</Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoName}>{repository.full_name}</Text>
+            <Text style={styles.infoOrganization}>{repository.organization}</Text>
+          </View>
+          <Text style={styles.icon}>...>>...</Text>
         </TouchableOpacity>
       </View>
     );
