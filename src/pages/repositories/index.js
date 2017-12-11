@@ -30,13 +30,19 @@ export default class Repositories extends Component {
 
   loadRepositories = async () => {
     this.setState({ refreshing: true });
-    const username = await AsyncStorage.getItem('@GitHubAppIssues:username');
+    const username = await AsyncStorage.getItem('@GitHubIssues:username');
     const response = await api.get(`/users/${username}/repos`);
     this.setState({ repositories: response.data, refreshing: false });
   };
 
   renderRepositories = () => (
-    <FlatList 
+    <FlatList
+      refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}// variavel que diz quando ele está atualizando ou não
+          onRefresh={this.loadRepositories}// qual ação deve fazer quando puxar a lista para baixo
+        />
+      }
       data={this.state.repositories} // conteudo que sera renderizado
       keyExtractor={repository => repository.id}// key, um repositorio por vez
       renderItem={({ item }) => <Repository navigation={this.props.navigation} repository={item} />}// como será renderizado cada item, { item } contem cada valor de state.repositories

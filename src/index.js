@@ -19,7 +19,7 @@ export default class App extends Component {
   }
 
   checkUser = async () => {
-    const user = await AsyncStorage.getItem('@GitHubAppIssues:username');
+    const user = await AsyncStorage.getItem('@GitHubIssues:username');
     return user !== null;
   };
 
@@ -28,7 +28,7 @@ export default class App extends Component {
 
     if (!response.ok) throw Error();// se user não existe Error
 
-    await AsyncStorage.setItem('@GitHubAppIssues:username', this.state.username);
+    await AsyncStorage.setItem('@GitHubIssues:username', this.state.username);
   };
 
   render() {

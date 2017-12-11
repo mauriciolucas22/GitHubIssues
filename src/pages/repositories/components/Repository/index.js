@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
+import Issues from '../../../issues';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Repository extends Component {
   static propTypes = {
@@ -31,12 +33,14 @@ export default class Repository extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.buttonContainer} onPress={this.navigateToIssues}>
-          <Text style={styles.avatar}>Avatar</Text>
+          <Image style={styles.avatar} source={{ uri: repository.owner.avatar_url }} />
           <View style={styles.infoContainer}>
-            <Text style={styles.infoName}>{repository.full_name}</Text>
-            <Text style={styles.infoOrganization}>{repository.organization}</Text>
+            <Text style={styles.infoRepoName}>{repository.name}</Text>
+            <Text style={styles.infoUserName}>{repository.owner.login}</Text>
           </View>
-          <Text style={styles.icon}>...>>...</Text>
+          <View style={styles.iconContainer}>
+            <Icon name="angle-right" size={20} color="#999" style={styles.icon} />
+          </View>
         </TouchableOpacity>
       </View>
     );

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../../../styles';
+import { colors, fonts } from '../../../../styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,6 +14,30 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.background,
     borderRadius: 3,
+  },
+
+  avatar: {
+    width: 64,
+    height: 64,
+    resizeMode: 'contain',
+  },
+
+  infoContainer: {
+    marginLeft: 20,
+  },
+
+  infoRepoName: {
+    fontWeight: 'bold',
+    fontSize: fonts.big,
+  },
+
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  icon: {
+    marginLeft: 40,
   },
 });
 

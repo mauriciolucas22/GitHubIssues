@@ -3,9 +3,10 @@ import { View, Text } from 'react-native';
 
 export default class Issues extends Component {
   render() {
+    const { issue } = this.props;
     return (
       <View>
-        <Text>Issues</Text>
+        <Text>{issue}</Text>
       </View>
     );
   }
