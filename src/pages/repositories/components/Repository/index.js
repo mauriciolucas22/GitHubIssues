@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import PropTypes from 'prop-types';
+import { NavigationActions } from 'react-navigation';
 
 import styles from './styles';
 import Issues from '../../../issues';
@@ -24,7 +25,8 @@ export default class Repository extends Component {
   navigateToIssues = () => {
     this.setState({ loading: true });
     const { navigate } = this.props.navigation;
-    navigate('Issues');
+    const { repository } = this.props;
+    navigate('Issues', { user: repository.name, urlIssues: `/repos/${repository.owner.login}/${repository.name}/issues` });
     this.setState({ loading: false });
   }
 

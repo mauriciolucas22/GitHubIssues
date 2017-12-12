@@ -7,7 +7,6 @@ import '../../config/ReactotronConfig';
 
 import styles from './styles';
 
-
 export default class Repositories extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
