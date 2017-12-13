@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import api from '../../../../services/api';
 import styles from './styles';
 
 export default class Header extends Component {
   state = {
     searchText: '',
+    loading: false,
   }
+
+  searchRepositorie = async () => {
+    this.setState({ loading: true });
+    const username = await AsyncStorage.getItem('@GitHubIssues:username');
+    const response = await api.get(`/orgs/${username}/${this.state.searchText}`);
+  };
 
   render() {
     return (
@@ -17,10 +24,10 @@ export default class Header extends Component {
           autoCorrect={false}
           style={styles.input}
           placeHolder="Adicionar repositório"
-          onCHangeText={(searchText) => { this.setState({ searchText }); }}
+          onChangeText={(searchText) => { this.setState({ searchText }); }}
         />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.searchRepositorie}>
           <Icon name="plus" size={30} color="#900" style={styles.icon} />
         </TouchableOpacity>
       </View>

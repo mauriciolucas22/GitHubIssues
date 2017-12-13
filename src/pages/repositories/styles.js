@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: colors.backgroundContainer
+    backgroundColor: colors.backgroundContainer,
   },
 
   loading: {

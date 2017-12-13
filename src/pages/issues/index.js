@@ -3,6 +3,7 @@ import { View, Text, FlatList, RefreshControl, ActivityIndicator } from 'react-n
 import api from '../../services/api';
 import PropTypes from 'prop-types';
 import styles from './styles';
+import Issue from './Issue';
 
 export default class Issues extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -39,7 +40,7 @@ export default class Issues extends Component {
       }
       data={this.state.issues}
       keyExtractor={issue => issue.id}
-      renderItem={({ item }) => this.issueComponent(item)}
+      renderItem={({ item }) => <Issue issue={item} />}
     />
   );
 

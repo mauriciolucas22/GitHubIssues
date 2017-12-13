@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 
 import styles from './styles';
-import Issues from '../../../issues';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Repository extends Component {
