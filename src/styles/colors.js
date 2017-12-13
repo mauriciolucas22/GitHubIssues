@@ -1,3 +1,5 @@
 export default {
-  background: '#FFF',
+  background: '#FFFFFF',
+  backgroundContainer: '#EEEEEE',
+  white: '#FFF',
 };

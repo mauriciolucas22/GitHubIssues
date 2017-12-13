@@ -1,4 +1,4 @@
 export default {
   small: 12,
-  big: 14,
+  big: 16,
 };

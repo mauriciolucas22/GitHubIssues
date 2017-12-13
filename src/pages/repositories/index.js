@@ -3,11 +3,16 @@ import { View, Text, AsyncStorage, ActivityIndicator, FlatList, RefreshControl }
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Repository from './components/Repository';
+import Header from './components/Header';
 import '../../config/ReactotronConfig';
 
 import styles from './styles';
 
 export default class Repositories extends Component {
+  static navigationOptions = {
+    header: <Header />,
+  }
+
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
