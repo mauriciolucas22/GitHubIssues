@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import api from '../../services/api';
 import PropTypes from 'prop-types';
 import styles from './styles';
@@ -10,10 +10,17 @@ export default class Issues extends Component {
     title: `${navigation.state.params.user}`,
   })
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      state: PropTypes.object,
+    }).isRequired,
+  }
+
   state = {
     issues: [],
     loading: false,
     refreshing: false,
+    statusIssue: 'open',
   }
 
   componentWillMount() {
@@ -26,9 +33,11 @@ export default class Issues extends Component {
     this.setState({ loading: false, issues: issues.data });
   }
 
-  issueComponent = issue => (
-    <Text>My Jesus</Text>
-  );
+  /* filter = (statusFilter) => {
+    this.setState({ statusFilter });
+    console.tron.log(statusFilter);
+    this.renderList();
+  } */
 
   renderIssues = () => (
     <FlatList
@@ -53,6 +62,17 @@ export default class Issues extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View>
+          <TouchableOpacity style={styles.all} onPress={this.filter('open')}>
+            <Text>All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.active} onPress={this.filter('open')}>
+            <Text>Ativo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.inactive} onPress={this.filter('closed')}>
+            <Text>Inativo</Text>
+          </TouchableOpacity>
+        </View>
         { this.state.loading
           ? <ActivityIndicator size="small" color="#999" style={styles.loading} />
           : this.renderList()

@@ -4,7 +4,6 @@ import { colors, fonts } from '../../styles';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: 'stretch',
   },
 
   buttonContainer: {
@@ -32,6 +31,19 @@ const styles = StyleSheet.create({
     fontSize: fonts.big,
     fontWeight: 'bold',
   },
+
+  loading: {
+    marginTop: 10,
+  },
+
+  empty: {
+    marginTop: 20,
+  },
+
+  containerFilter: {
+    color: colors.filter,
+  },
+
 });
 
 export default styles;

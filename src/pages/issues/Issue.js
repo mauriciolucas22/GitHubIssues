@@ -28,7 +28,7 @@ export default class Issue extends Component {
         <TouchableOpacity style={styles.buttonContainer} onPress={this.click}>
           <Image style={styles.avatarIssue} source={{ uri: issue.user.avatar_url }} />
           <View style={styles.infoIssue}>
-            <Text style={styles.titleIssue}>{issue.title.slice(0, 40)}...</Text>
+            <Text style={styles.titleIssue}>{issue.title.length >= 30 ? issue.title.slice(0, 30).concat('...') : issue.title}</Text>
             <Text style={styles.userIssue}>{issue.user.login}</Text>
           </View>
         </TouchableOpacity>

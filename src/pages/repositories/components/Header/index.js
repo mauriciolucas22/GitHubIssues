@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import api from '../../../../services/api';
 import styles from './styles';
@@ -8,12 +8,49 @@ export default class Header extends Component {
   state = {
     searchText: '',
     loading: false,
+    repositorie: {},
   }
+
+  getOrganizationString = (text = this.state.searchText) => {
+    const index = text.indexOf('/');
+    const org = text.slice(0, index);
+    const repo = text.slice(index + 1);
+
+    return { org, repo };
+  };
 
   searchRepositorie = async () => {
     this.setState({ loading: true });
-    const username = await AsyncStorage.getItem('@GitHubIssues:username');
-    const response = await api.get(`/orgs/${username}/${this.state.searchText}`);
+    const { org, repo } = this.getOrganizationString(this.state.searchText);
+    const response = await api.get(`/repos/${org}/${repo}`);
+    this.setState({ loading: false, repositorie: response.data });
+  };
+
+  /**
+   * Ao​ ​ clicar​ ​ no​ ​ botão​ ​ “+”​ ​ uma​ ​ request​ ​ será​ ​ enviada​ ​ à ​ ​ API​ ​ do​ ​ Github​ ​ buscando
+   * informações​ ​ do​ ​ repositório​ ​ e ​ ​ armazenando​ ​ os​ ​ campos​ ​ ID,​ ​ nome,​ ​ organização​ ​ e
+   * avatar​ ​ no​ ​ storage​ ​ (AsyncStorage)​ ​ do​ ​ dispositivo;
+   */
+
+  checkAndSaveRepositorie = async () => {
+    this.searchRepositorie().then(() => {
+      this.saveRepositorie();
+    });
+  };
+
+  saveRepositorie = async () => {
+    const { org } = this.getOrganizationString();
+    const { repositorie } = this.state;
+
+    if (repositorie) {
+      await AsyncStorage.setItem('@GitHubIssues:repositories', JSON.stringify([
+        {
+          id: repositorie.id,
+          name: repositorie.name,
+          org,
+        },
+      ]));
+    }
   };
 
   render() {
@@ -27,7 +64,7 @@ export default class Header extends Component {
           onChangeText={(searchText) => { this.setState({ searchText }); }}
         />
 
-        <TouchableOpacity onPress={this.searchRepositorie}>
+        <TouchableOpacity onPress={this.checkAndSaveRepositorie}>
           <Icon name="plus" size={30} color="#900" style={styles.icon} />
         </TouchableOpacity>
       </View>

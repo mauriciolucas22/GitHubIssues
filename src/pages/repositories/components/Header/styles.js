@@ -4,19 +4,20 @@ import { colors, fonts } from '../../../../styles';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    height: 70,
-    padding: 20,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 60,
     flexDirection: 'row',
   },
 
   input: {
-    backgroundColor: colors.backgroundContainer,
+    backgroundColor: colors.backgroundFilter,
     fontSize: fonts.small,
     width: 300,
-    height: 30,
-    borderRadius: 3,
+    height: 40,
+    borderRadius: 5,
     paddingHorizontal: 20,
-    marginLeft: 10,
+    marginLeft: 20,
   },
 
   icon: {
