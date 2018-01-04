@@ -33,11 +33,11 @@ export default class Issues extends Component {
     this.setState({ loading: false, issues: issues.data });
   }
 
-  /* filter = (statusFilter) => {
+  filter = (statusFilter) => {
     this.setState({ statusFilter });
     console.tron.log(statusFilter);
     this.renderList();
-  } */
+  }
 
   renderIssues = () => (
     <FlatList
@@ -62,17 +62,6 @@ export default class Issues extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <TouchableOpacity style={styles.all} onPress={this.filter('open')}>
-            <Text>All</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.active} onPress={this.filter('open')}>
-            <Text>Ativo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.inactive} onPress={this.filter('closed')}>
-            <Text>Inativo</Text>
-          </TouchableOpacity>
-        </View>
         { this.state.loading
           ? <ActivityIndicator size="small" color="#999" style={styles.loading} />
           : this.renderList()

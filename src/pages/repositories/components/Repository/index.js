@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 
@@ -19,7 +19,13 @@ export default class Repository extends Component {
 
   state = {
     loading: false,
+    savedRepositories: {},
   }
+
+  checkStorage = async () => {
+    const savedRepositories = await AsyncStorage.getItem('@GitHubIssues:repositories');
+    this.setState({ savedRepositories });
+  };
 
   navigateToIssues = () => {
     this.setState({ loading: true });

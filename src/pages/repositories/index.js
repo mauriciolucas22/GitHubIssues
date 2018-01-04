@@ -20,6 +20,7 @@ export default class Repositories extends Component {
   }
 
   state = {
+    savedRepositories: {},
     repositories: [],
     loading: false,
     refreshing: false,
@@ -27,6 +28,7 @@ export default class Repositories extends Component {
 
   componentWillMount() {
     this.setState({ loading: true });
+    this.loadSavedRepositories();
     this.loadRepositories().then(() => {
       this.setState({ loading: false });
     });
@@ -37,6 +39,15 @@ export default class Repositories extends Component {
     const username = await AsyncStorage.getItem('@GitHubIssues:username');
     const response = await api.get(`/users/${username}/repos`);
     this.setState({ repositories: response.data, refreshing: false });
+  };
+
+  loadSavedRepositories = async () => {
+    const savedRepositories = await AsyncStorage.getItem('@GitHubIssues:repositories');
+    this.setState({ savedRepositories });
+  };
+
+  filterRepositoriesSaved = () => {
+    this.state.savedRepositories.map(saved => saved !== this.state.repositories.map(repo => repo));
   };
 
   renderRepositories = () => (
