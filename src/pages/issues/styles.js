@@ -44,6 +44,18 @@ const styles = StyleSheet.create({
     color: colors.filter,
   },
 
+  buttonFilterNotSelected: {
+    backgroundColor: '#959',
+  },
+
+  active: {
+    backgroundColor: '#666',
+  },
+
+  notActive: {
+    backgroundColor: '#959',
+  },
+
 });
 
 export default styles;

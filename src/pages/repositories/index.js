@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import { View, Text, AsyncStorage, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Repository from './components/Repository';
