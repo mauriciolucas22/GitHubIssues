@@ -40,20 +40,31 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  containerFilter: {
-    color: colors.filter,
-  },
-
-  buttonFilterNotSelected: {
-    backgroundColor: '#959',
+  filterContainer: {
+    backgroundColor: colors.backgroundFilterContainer,
+    flexDirection: 'row',
+    borderRadius: 5,
+    marginLeft: 20,
+    marginRight: 20,
   },
 
   active: {
-    backgroundColor: '#666',
+    backgroundColor: colors.backgroundFilterActive,
+    alignSelf: 'stretch',
+    width: 100,
+    height: 35,
   },
 
   notActive: {
-    backgroundColor: '#959',
+    shadowColor: colors.backgroundFilterActive,
+    shadowOpacity: colors.backgroundFilterNotSelected,
+    alignSelf: 'stretch',
+    width: 100,
+    height: 35,
+  },
+
+  textActive: {
+    fontWeight: 'bold',
   },
 
 });

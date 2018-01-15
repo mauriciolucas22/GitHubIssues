@@ -1,7 +1,8 @@
 export default {
   background: '#FFFFFF',
   backgroundContainer: '#EEEEEE',
-  backgroundFilter: '#DDDDDD',
+  backgroundFilterContainer: '#DDDDDD',
   white: '#FFF',
-  filter: '#666666',
+  backgroundFilterActive: '#666666',
+  backgroundFilterNotSelected: 0.5,
 };

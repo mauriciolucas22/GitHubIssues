@@ -23,6 +23,10 @@ E daí em cada botão de filtro você faz uma verificação se ele está ativo e
 >
 Algo assim
 Aí quando clicar em cada botão de filtro precisa setar esse estado activeFilter com o que você clicou
+
+
+Você deve realizar uma query cada vez que clicar em um botão de filtro passando um parâmetro na url https://api.github.com/repos/react-community/react-navigation/issues?type=closed
+closed, open ou all
  */
 
 export default class Issues extends Component {
@@ -40,7 +44,6 @@ export default class Issues extends Component {
     issues: [],
     loading: false,
     refreshing: false,
-    statusIssue: 'open',
     activeFilter: 'all',
   }
 
@@ -50,14 +53,12 @@ export default class Issues extends Component {
 
   loadIssues = async () => {
     this.setState({ loading: true });
-    const issues = await api.get(this.props.navigation.state.params.urlIssues);
+    const issues = await api.get(`${this.props.navigation.state.params.urlIssues}?type=${this.state.activeFilter}`);
     this.setState({ loading: false, issues: issues.data });
   }
 
-  filter = (statusFilter) => {
-    this.setState({ statusFilter });
-    console.tron.log(statusFilter);
-    this.renderList();
+  filter = () => {
+    this.loadIssues();
   }
 
   renderIssues = () => (
@@ -76,43 +77,42 @@ export default class Issues extends Component {
 
   renderList = () => (
     this.state.issues.length
-      ? this.renderIssues()
+      ? this.renderIssues(this.state.activeFilter)
       : <Text style={styles.empty}>Nenhuma Issue!</Text>
   );
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={[
-            styles.buttonFilterNotSelected,
+
+        <View style={styles.filterContainer}>
+          <TouchableOpacity
+            style={[
             this.state.activeFilter === 'all' ? styles.active : styles.notActive,
           ]}
-          onPress={() => { this.setState({ activeFilter: 'all' }); }}
-        >
-          <Text>TEST</Text>
-        </TouchableOpacity>
+            onPress={() => { this.setState({ activeFilter: 'all' }); this.filter(); }}
+          >
+            <Text style={this.state.activeFilter === 'all' ? styles.textActive : {}}>Todos</Text>
+          </TouchableOpacity>
 
-
-        <TouchableOpacity
-          style={[
-            styles.buttonFilterNotSelected,
+          <TouchableOpacity
+            style={[
             this.state.activeFilter === 'open' ? styles.active : styles.notActive,
           ]}
-          onPress={() => { this.setState({ activeFilter: 'open' }); }}
-        >
-          <Text>TEST</Text>
-        </TouchableOpacity>
+            onPress={() => { this.setState({ activeFilter: 'open' }); this.filter(); }}
+          >
+            <Text style={this.state.activeFilter === 'open' ? styles.textActive : {}}>Ativos</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[
-            styles.buttonFilterNotSelected,
-            this.state.activeFilter === 'closed' ? styles.active : {},
+          <TouchableOpacity
+            style={[
+            this.state.activeFilter === 'closed' ? styles.active : styles.notActive,
           ]}
-          onPress={() => { this.setState({ activeFilter: 'closed' }); }}
-        >
-          <Text>TEST</Text>
-        </TouchableOpacity>
+            onPress={() => { this.setState({ activeFilter: 'closed' }); this.filter(); }}
+          >
+            <Text style={this.state.activeFilter === 'closed' ? styles.textActive : {}}>Fechados</Text>
+          </TouchableOpacity>
+        </View>
 
         { this.state.loading
           ? <ActivityIndicator size="small" color="#999" style={styles.loading} />
