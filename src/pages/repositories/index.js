@@ -34,8 +34,8 @@ export default class Repositories extends Component {
       this.setState({
         loading: false,
         testRepos: [
-          ...this.state.repositories,
           ...this.state.savedRepositories,
+          ...this.state.repositories,
         ],
       });
     });
