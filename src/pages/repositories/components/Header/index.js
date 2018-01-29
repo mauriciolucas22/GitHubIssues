@@ -32,7 +32,7 @@ export default class Header extends Component {
    * avatar​ ​ no​ ​ storage​ ​ (AsyncStorage)​ ​ do​ ​ dispositivo;
    */
 
-  checkAndSaveRepositorie = async () => {
+  checkAndSaveRepositorie = () => {
     this.searchRepositorie().then(() => {
       this.saveRepositorie();
     });
@@ -43,15 +43,18 @@ export default class Header extends Component {
     const { repositorie } = this.state;
 
     if (repositorie) {
-      await AsyncStorage.setItem('@GitHubIssues:repositories', JSON.stringify([
-        {
-          id: repositorie.id,
-          name: repositorie.name,
-          org,
-        },
-      ]));
+      const reposSaved = JSON.parse(await AsyncStorage.getItem('@GitHubIssues:repositories')) || [];
+
+      const newSaved = [...reposSaved, {
+        id: repositorie.id,
+        org,
+        name: repositorie.name,
+      }];
+
+      await AsyncStorage.setItem('@GitHubIssues:repositories', JSON.stringify(newSaved));
     }
   };
+
 
   render() {
     return (
