@@ -20,7 +20,8 @@ export default class Repositories extends Component {
   }
 
   state = {
-    savedRepositories: {},
+    testRepos: [],
+    savedRepositories: [],
     repositories: [],
     loading: false,
     refreshing: false,
@@ -30,7 +31,13 @@ export default class Repositories extends Component {
     this.setState({ loading: true });
     this.loadSavedRepositories();
     this.loadRepositories().then(() => {
-      this.setState({ loading: false });
+      this.setState({
+        loading: false,
+        testRepos: [
+          ...this.state.repositories,
+          ...this.state.savedRepositories,
+        ],
+      });
     });
   }
 
@@ -41,9 +48,23 @@ export default class Repositories extends Component {
     this.setState({ repositories: response.data, refreshing: false });
   };
 
+  loadRepo = async (repo) => {
+    const response = await api.get(`repos/${repo.org}/${repo.name}`);
+    this.setState({
+      savedRepositories: [
+        ...this.state.savedRepositories,
+        response.data,
+      ],
+    });
+    return response;
+  }
+
   loadSavedRepositories = async () => {
-    const savedRepositories = await AsyncStorage.getItem('@GitHubIssues:repositories');
-    this.setState({ savedRepositories });
+    // carrega objeto de repos in Async
+    const savedRepositories = JSON.parse(await AsyncStorage.getItem('@GitHubIssues:repositories')) || [];
+
+    // faz mapeamento dos repos saved e add in response
+    savedRepositories.map(repo => this.loadRepo(repo));
   };
 
   filterRepositoriesSaved = () => {
@@ -58,7 +79,7 @@ export default class Repositories extends Component {
           onRefresh={this.loadRepositories}// qual ação deve fazer quando puxar a lista para baixo
         />
       }
-      data={this.state.repositories} // conteudo que sera renderizado
+      data={this.state.testRepos} // conteudo que sera renderizado
       keyExtractor={repository => repository.id}// key, um repositorio por vez
       renderItem={({ item }) => <Repository navigation={this.props.navigation} repository={item} />}// como será renderizado cada item, { item } contem cada valor de state.repositories
     />

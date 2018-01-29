@@ -19,13 +19,7 @@ export default class Repository extends Component {
 
   state = {
     loading: false,
-    savedRepositories: {},
   }
-
-  checkStorage = async () => {
-    const savedRepositories = await AsyncStorage.getItem('@GitHubIssues:repositories');
-    this.setState({ savedRepositories });
-  };
 
   navigateToIssues = () => {
     this.setState({ loading: true });
